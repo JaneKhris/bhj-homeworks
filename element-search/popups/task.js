@@ -1,15 +1,14 @@
-const modal_main = document.getElementById('modal_main')
-const modal_success = document.getElementById('modal_success')
+const modalMain = document.getElementById('modal_main')
+const modalSccess = document.getElementById('modal_success')
 
-modal_main.className = 'modal modal_active'
+modalMain.className = 'modal modal_active'
 
-const close = document.getElementsByClassName('modal__close')
 
-const close_array = Array.from(close)
-close_array.forEach((element) => {
+const closeArray = Array.from(document.getElementsByClassName('modal__close'))
+closeArray.forEach((element) => {
     element.onclick = () => {
-        modal_main.className = 'modal'
-        modal_success.className = 'modal'
+        modalMain.className = 'modal'
+        modalSccess.className = 'modal'
     }
 })
 
@@ -17,7 +16,8 @@ const success = document.getElementsByClassName('show-success')
 const success_array = Array.from(success)
 success_array.forEach((element) => {
     element.onclick = () => {
-        modal_success.className = 'modal modal_active'
+        modalMain.className = 'modal'
+        modalSccess.className = 'modal modal_active'
     }
 })
 
