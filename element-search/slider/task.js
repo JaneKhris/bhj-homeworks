@@ -1,108 +1,125 @@
-const array_item = Array.from(document.querySelectorAll('.slider__item'))
-const count = array_item.length
+const arrayItem = Array.from(document.querySelectorAll('.slider__item'))
+const count = arrayItem.length
 
 const dots = Array.from(document.querySelectorAll('.slider__dot'))
-
-let slide_number = 0
 
 const bottomPrev = document.querySelector('.slider__arrow_prev')
 const bottomNext = document.querySelector('.slider__arrow_next')
 
-numberUp = () => {
-    if (slide_number < (count-1)) {slide_number += 1}
-    else {slide_number = 0}
+findActive = () => {
+	let ind
+	arrayItem.forEach((dot, index) => {
+		if (dot.className.includes('slider__item_active')) {
+			ind = index
+		}
+	})
+	return ind
+}
+
+deactivateImg = (index) => {
+	arrayItem[index].className = 'slider__item'
+	dots[index].className = 'slider__dot'
 }
 
 
-numberDown = () => {
-    if (slide_number > 0) {slide_number -= 1}
-    else {slide_number = (count-1)}
-}
-
-//  Основное задание
-
-let interval = 500
-let id
-
-right = () => {
-    id = setInterval(() => {
-        array_item[slide_number].className = 'slider__item'
-        numberUp()
-        array_item[slide_number].className = 'slider__item slider__item_active'
-        },interval)
-    }
-
-
-left = () => {
-    id = setInterval(() => {
-        array_item[slide_number].className = 'slider__item'
-        numberDown()
-        array_item[slide_number].className = 'slider__item slider__item_active'
-        },interval)
-    }
-
-
-bottomPrev.onclick = () => {
-    clearInterval(id)
-    left()
-}
-
-bottomNext.onclick = () => {
-    clearInterval(id)
-    right()
+activateImg = (index) => {
+	arrayItem[index].className = 'slider__item slider__item_active'
+	dots[index].className = 'slider__dot slider__dot_active'
 }
 
 
-right()
-
-// // Дополнительное задание
-
-// deactivateImg = (index) => {
-//     array_item[index].className = 'slider__item'
-//     dots[index].className = 'slider__dot'
-// }
-
-
-// activateImg = (index) => {
-//     array_item[index].className = 'slider__item slider__item_active'
-//     dots[index].className = 'slider__dot slider__dot_active'
-// }
-
-// findActive = () => {
-//     let num
-//     dots.forEach((dot,index) =>{
-//         if (dot.className.includes( 'slider__dot_active' )) {slide_number = index}
-//     })
-// }
+numberUp = (index) => {
+	if (index < (count - 1)) {
+		index += 1
+	} else {
+		index = 0
+	}
+	return index
+}
 
 
-// dots.forEach((dot,index) => {
-//     dot.onclick = () => {
-//         console.log(index)
-//         slide_number = index
-//         for (let i = 0; i<count; i++) {
-//             if (i == index) { activateImg(i)}
-//             else {deactivateImg(i)}
-//             }
-//         }
-//     })
+numberDown = (index) => {
+	if (index > 0) {
+		index -= 1
+	} else {
+		index = (count - 1)
+	}
+	return index
+}
+
+mainTask = () => { //  Основное задание
+	let interval = 500
+	let id
+
+	right = () => {
+		let indexActive = findActive()
+		id = setInterval(() => {
+			deactivateImg(indexActive)
+			indexActive = numberUp(indexActive)
+			activateImg(indexActive)
+		}, interval)
+	}
 
 
-// next = () => {
-//     findActive()
-//     deactivateImg(slide_number)
-//     numberUp()
-//     activateImg(slide_number)
-// }
-
-// prev = () => {
-//     findActive()
-//     deactivateImg(slide_number)
-//     numberDown()
-//     activateImg(slide_number)
-// }
+	left = () => {
+		let indexActive = findActive()
+		id = setInterval(() => {
+			deactivateImg(indexActive)
+			indexActive = numberDown(indexActive)
+			activateImg(indexActive)
+		}, interval)
+	}
 
 
-// bottomNext.onclick = () => {next()}
+	bottomPrev.onclick = () => {
+		clearInterval(id)
+		left()
+	}
 
-// bottomPrev.onclick = () => {prev()}
+	bottomNext.onclick = () => {
+		clearInterval(id)
+		right()
+	}
+
+
+	right()
+}
+
+
+addTask = () => { // Дополнительное задание
+	dots.forEach((dot, index) => {
+		dot.onclick = () => {
+			for (let i = 0; i < count; i++) {
+				if (i == index) {
+					activateImg(i)
+				} else {
+					deactivateImg(i)
+				}
+			}
+		}
+	})
+
+
+	next = () => {
+		let indexActive = findActive()
+		deactivateImg(indexActive)
+		indexActive = numberUp(indexActive)
+		activateImg(indexActive)
+	}
+
+	prev = () => {
+		let indexActive = findActive()
+		deactivateImg(indexActive)
+		indexActive = numberDown(indexActive)
+		activateImg(indexActive)
+	}
+
+
+	bottomNext.onclick = () => {
+		next()
+	}
+
+	bottomPrev.onclick = () => {
+		prev()
+	}
+}
