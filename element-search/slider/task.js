@@ -1,3 +1,5 @@
+const addition = false
+
 const arrayItem = Array.from(document.querySelectorAll('.slider__item'))
 const count = arrayItem.length
 
@@ -6,7 +8,7 @@ const dots = Array.from(document.querySelectorAll('.slider__dot'))
 const bottomPrev = document.querySelector('.slider__arrow_prev')
 const bottomNext = document.querySelector('.slider__arrow_next')
 
-findActive = () => {
+let findActive = () => {
 	let ind
 	arrayItem.forEach((dot, index) => {
 		if (dot.className.includes('slider__item_active')) {
@@ -16,19 +18,19 @@ findActive = () => {
 	return ind
 }
 
-deactivateImg = (index) => {
+let deactivateImg = (index) => {
 	arrayItem[index].className = 'slider__item'
 	dots[index].className = 'slider__dot'
 }
 
 
-activateImg = (index) => {
+let activateImg = (index) => {
 	arrayItem[index].className = 'slider__item slider__item_active'
 	dots[index].className = 'slider__dot slider__dot_active'
 }
 
 
-numberUp = (index) => {
+let numberUp = (index) => {
 	if (index < (count - 1)) {
 		index += 1
 	} else {
@@ -38,7 +40,7 @@ numberUp = (index) => {
 }
 
 
-numberDown = (index) => {
+let numberDown = (index) => {
 	if (index > 0) {
 		index -= 1
 	} else {
@@ -47,11 +49,11 @@ numberDown = (index) => {
 	return index
 }
 
-mainTask = () => { //  Основное задание
+let mainTask = () => { //  Основное задание
 	let interval = 500
 	let id
 
-	right = () => {
+	let right = () => {
 		let indexActive = findActive()
 		id = setInterval(() => {
 			deactivateImg(indexActive)
@@ -61,7 +63,7 @@ mainTask = () => { //  Основное задание
 	}
 
 
-	left = () => {
+	let left = () => {
 		let indexActive = findActive()
 		id = setInterval(() => {
 			deactivateImg(indexActive)
@@ -86,7 +88,7 @@ mainTask = () => { //  Основное задание
 }
 
 
-addTask = () => { // Дополнительное задание
+let addTask = () => { // Дополнительное задание
 	dots.forEach((dot, index) => {
 		dot.onclick = () => {
 			for (let i = 0; i < count; i++) {
@@ -100,14 +102,14 @@ addTask = () => { // Дополнительное задание
 	})
 
 
-	next = () => {
+	let next = () => {
 		let indexActive = findActive()
 		deactivateImg(indexActive)
 		indexActive = numberUp(indexActive)
 		activateImg(indexActive)
 	}
 
-	prev = () => {
+	let prev = () => {
 		let indexActive = findActive()
 		deactivateImg(indexActive)
 		indexActive = numberDown(indexActive)
@@ -122,4 +124,11 @@ addTask = () => { // Дополнительное задание
 	bottomPrev.onclick = () => {
 		prev()
 	}
+}
+
+if (addition) {
+    addTask()
+}
+else {
+    mainTask()
 }
