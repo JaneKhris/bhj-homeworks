@@ -8,6 +8,7 @@ class Game {
     this.reset();
 
     this.registerEvents();
+
   }
 
   reset() {
@@ -19,13 +20,28 @@ class Game {
   registerEvents() {
     this.currentSymbol = document.querySelector('.symbol_current')
     document.addEventListener('keyup',(event) => {
-      if (this.currentSymbol.textContent.toLowerCase() == event.key.toLowerCase()) {
+      console.log(event.key)
+      if (event.key == 'Shift') { }
+      else if (this.currentSymbol.textContent.toLowerCase() == event.key.toLowerCase()) {
         this.success()
       }
       else {
         this.fail()
       }
     })
+  }
+
+  timer() {
+    const countDown = document.querySelector('.timer');
+    countDown.textContent = Array.from(document.querySelectorAll('.symbol')).length;
+    console.log('TIMER')
+    let id = setInterval(() => {
+      countDown.textContent = Number(countDown.textContent)-1;
+      if (countDown.textContent < 0) {
+        clearInterval(id)
+        this.fail()
+      }
+    },1000)
   }
 
   success() {
@@ -57,6 +73,7 @@ class Game {
     const word = this.getWord();
 
     this.renderWord(word);
+    this.timer();
   }
 
   getWord() {
