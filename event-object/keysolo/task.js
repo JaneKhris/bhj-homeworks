@@ -15,18 +15,19 @@ class Game {
     this.setNewWord();
     this.winsElement.textContent = 0;
     this.lossElement.textContent = 0;
+    this.id = 1;
   }
 
   registerEvents() {
-    this.currentSymbol = document.querySelector('.symbol_current')
+    this.currentSymbol = document.querySelector('.symbol_current');
     document.addEventListener('keyup',(event) => {
-      console.log(event.key)
+      console.log(event.key);
       if (event.key == 'Shift') { }
       else if (this.currentSymbol.textContent.toLowerCase() == event.key.toLowerCase()) {
-        this.success()
+        this.success();
       }
       else {
-        this.fail()
+        this.fail();
       }
     })
   }
@@ -34,14 +35,17 @@ class Game {
   timer() {
     const countDown = document.querySelector('.timer');
     countDown.textContent = Array.from(document.querySelectorAll('.symbol')).length;
-    console.log('TIMER')
-    let id = setInterval(() => {
+    this.id = setInterval(() => {
       countDown.textContent = Number(countDown.textContent)-1;
       if (countDown.textContent < 0) {
-        clearInterval(id)
-        this.fail()
+        clearInterval(this.id);
+        this.fail();
       }
-    },1000)
+    },2000)
+  }
+
+  timerReset() {
+    clearInterval(this.id);
   }
 
   success() {
@@ -73,6 +77,7 @@ class Game {
     const word = this.getWord();
 
     this.renderWord(word);
+    this.timerReset();
     this.timer();
   }
 
