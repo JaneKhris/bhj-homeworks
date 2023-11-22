@@ -4,7 +4,7 @@ const taskList = document.getElementById('tasks__list');
 
 button.addEventListener('click', (event) => {
     event.preventDefault();
-    if (input.value) {
+    if (input.value.trim()) {
         let div = document.createElement('div');
         div.innerHTML = `
         <div class="task">
@@ -20,5 +20,8 @@ button.addEventListener('click', (event) => {
             event.preventDefault();
             taskRemove.closest('.task').remove();
         })
+    }
+    else {
+        input.value = '';
     }
 })
