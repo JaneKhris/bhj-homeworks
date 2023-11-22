@@ -5,7 +5,7 @@ hasTooltip.forEach((element) => {
     let div = document.createElement('div');
     div.className = 'tooltip';
     div.textContent = element.getAttribute('title');
-    element.appendChild(div);
+    element.after(div);
 })
 
 const tooltips = Array.from(document.querySelectorAll('.tooltip'));
@@ -20,7 +20,7 @@ hasTooltip.forEach((element) => {
     element.addEventListener('click',(event) => {
         event.preventDefault();
         hideTooltips();
-        let tooltip = element.querySelector('.tooltip');
+        let tooltip = element.parentElement.querySelector('.tooltip');
         let { left, right, top, bottom } = element.getBoundingClientRect();
         let position = getPosition();
         tooltip.setAttribute("data-position", position);
@@ -37,7 +37,6 @@ hasTooltip.forEach((element) => {
             tooltip.setAttribute("style",`left:${left}px; top:${bottom}px`);
         }
         tooltip.classList.add('tooltip_active');
-        console.log(tooltip)
     })
 })
 
