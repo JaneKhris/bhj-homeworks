@@ -9,10 +9,8 @@ window.addEventListener('beforeunload', (e) => {
 })
 
 const button = document.createElement('button');
-button.className = 'button_clear';
 button.innerHTML = 'Очистить поле';
 document.querySelector('main').appendChild(button);
 button.addEventListener('click', (e) => {
-    e.preventDefault();
     editor.value = '';
 })
