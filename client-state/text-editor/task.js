@@ -1,12 +1,12 @@
 const storedText = localStorage.getItem('text');
 const editor = document.getElementById('editor');
 
-if(storedText) {
-    editor.value = storedText;
-} 
-setInterval(() => {
+editor.value = storedText;
+
+window.addEventListener('beforeunload', (e) => {
+    e.preventDefault();
     localStorage.setItem('text', editor.value );
-},500)
+})
 
 const button = document.createElement('button');
 button.className = 'button_clear';
@@ -16,4 +16,3 @@ button.addEventListener('click', (e) => {
     e.preventDefault();
     editor.value = '';
 })
-
