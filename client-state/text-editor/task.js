@@ -13,4 +13,5 @@ button.innerHTML = 'Очистить поле';
 document.querySelector('main').appendChild(button);
 button.addEventListener('click', (e) => {
     editor.value = '';
+    localStorage.removeItem('text');
 })
